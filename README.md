@@ -1,12 +1,11 @@
 # GeoFind
-GeoFind is a tiny command-line tool that fetches geolocation information from an IP address or a domain. It uses ipinfo.io to provide info such as city, region, country, and hostname associated with the given IP address or a URL.
+GeoFind is a tiny command-line tool that fetches geolocation information from an IP address or a domain. It uses ipinfo.io to provide info such as city, region, country, and hostname associated with the given IP address or a website.
 
 ![Screenshot](/.github/screenshot.png)
 
 ## Prerequisites
-- libcurl (Curl library)
-- libjson-c (JSON-C library)
-
+- libcurl & libjson-c
+- 
 ```bash
 sudo apt update
 sudo apt install libcurl4-openssl-dev libjson-c-dev
@@ -34,7 +33,7 @@ sudo mv geofind /usr/local/bin/
 geofind [IP address or domain]
 ```
 
-## Example
+## Examples
 ```bash
 $ geofind 8.8.8.8
 
@@ -44,13 +43,13 @@ Region: California
 Country: United States
 Hostname: dns.google
 ```
+
 ```bash
-$ geofind 12.12.12.12
+$ geofind nasa.gov
 
-IP: 12.12.12.12
-City: Anchorage
-Region: Alaska
+IP: 23.22.39.120
+City: Ashburn
+Region: Virginia
 Country: United States
-Hostname: doh.att.net
-
-
+Hostname: ec2-23-22-39-120.compute-1.amazonaws.com
+```
