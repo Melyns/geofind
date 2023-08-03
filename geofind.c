@@ -16,6 +16,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "country_codes.h"
 
 #define GEO_API "https://ipinfo.io/"
@@ -129,16 +130,30 @@ bool get_geolocation_info(const char *ip_or_url) {
 
 // Function to print the usage information
 void print_usage(const char *program_name) {
-    printf("Usage: %s [IP or Domain]\n", program_name);
+    printf("Usage:\n");
+    printf("%s [IP address or domain]\n", program_name);
+    printf("Self lookup: %s me\n", program_name);
 }
 
 int main(int argc, char *argv[]) {
+    if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
+        // Print help information and exit if --help or -h is provided
+        print_usage(argv[0]);
+        return 0;
+    }
+
     bool success = false;
 
     if (argc != 2) {
-        // Print usage information and exit if invalid number of arguments
+        printf("Error: Invalid number of arguments.\n");
         print_usage(argv[0]);
         return 1;
+    }
+
+    if (strcmp(argv[1], "me") == 0) {
+        // Handle "me" command separately by directly executing "curl https://ipinfo.io"
+        system("curl https://ipinfo.io");
+        return 0;
     }
 
     // Initialize libcurl
@@ -150,5 +165,6 @@ int main(int argc, char *argv[]) {
     // Clean up libcurl
     curl_global_cleanup();
 
-    return 0;
+    return success ? 0 : 1;
 }
+
