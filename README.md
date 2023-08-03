@@ -1,5 +1,5 @@
 # GeoFind
-GeoFind is a simple command-line tool that fetches geolocation information from an IP address or URL. It uses the ipinfo.io to provide location info such as city, region, country, and hostname associated with the given IP address or a URL.
+GeoFind is a simple command-line tool that fetches geolocation information from an IP address or URL. It uses ipinfo.io to provide location info such as city, region, country, and hostname associated with the given IP address or a URL.
 
 ## Prerequisites
 - libcurl (Curl library)
