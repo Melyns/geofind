@@ -28,14 +28,14 @@ jobs:
 
       # Add the CodeQL analysis steps
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: 'cpp' # Replace 'cpp' with your language if different
 
       # CodeQL Autobuild is not needed if your project is not compiled, so you can remove it.
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
         with:
           # Use the relevant category for your language.
           # For C/C++, use "cpp". For other languages, check CodeQL language support.
