@@ -51,3 +51,6 @@ Country: United States
 Org: AS14618 Amazon.com, Inc.
 Hostname: ec2-23-22-39-120.compute-1.amazonaws.com
 ```
+
+## License
+[GNU General Public License v3.0](https://github.com/Melyyn/geofind/blob/main/LICENSE)
