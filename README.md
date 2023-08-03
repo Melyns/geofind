@@ -41,6 +41,7 @@ IP: 8.8.8.8
 City: Mountain View
 Region: California
 Country: United States
+Org: AS15169 Google LLC
 Hostname: dns.google
 ```
 
@@ -51,5 +52,6 @@ IP: 23.22.39.120
 City: Ashburn
 Region: Virginia
 Country: United States
+Org: AS14618 Amazon.com, Inc.
 Hostname: ec2-23-22-39-120.compute-1.amazonaws.com
 ```
