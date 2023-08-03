@@ -1,4 +1,4 @@
-# GeoFind [![CI](https://github.com/Melyyn/geofind/actions/workflows/ci.yml/badge.svg)](https://github.com/Melyyn/geofind/actions/workflows/ci.yml)
+# GeoFind   [![CI](https://github.com/Melyyn/geofind/actions/workflows/ci.yml/badge.svg)](https://github.com/Melyyn/geofind/actions/workflows/ci.yml)
 
 GeoFind is a tiny command-line tool that fetches geolocation information from an IP address or a domain. It uses ipinfo.io to provide info such as city, region, country, and hostname associated with the given IP address or a website.
 
@@ -15,8 +15,7 @@ sudo apt install libcurl4-openssl-dev libjson-c-dev
 ## Installation
 Clone the repository:
 ```bash
-git clone https://github.com/melyyn/geofind.git
-cd geofind
+git clone https://github.com/melyyn/geofind.git && cd geofind
 ```
 
 Build:
