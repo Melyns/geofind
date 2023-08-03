@@ -1,0 +1,42 @@
+name: CI with CodeQL
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libjson-c-dev
+
+      - name: Build
+        run: |
+          gcc geofind.c -o geofind -lcurl -ljson-c
+
+      - name: Run tests
+        run: |
+          geofind 8.8.8.8
+
+      # Add the CodeQL analysis steps
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: 'cpp' # Replace 'cpp' with your language if different
+
+      # CodeQL Autobuild is not needed if your project is not compiled, so you can remove it.
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          # Use the relevant category for your language.
+          # For C/C++, use "cpp". For other languages, check CodeQL language support.
+          category: "/language:cpp"
