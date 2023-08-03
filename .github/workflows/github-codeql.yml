@@ -24,7 +24,7 @@ jobs:
 
       - name: Run tests
         run: |
-          geofind 8.8.8.8
+          ./geofind 8.8.8.8
 
       # Add the CodeQL analysis steps
       - name: Initialize CodeQL
