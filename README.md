@@ -18,19 +18,15 @@ Clone the repository:
 git clone https://github.com/melyyn/geofind.git && cd geofind
 ```
 
-Build:
+Build & Install:
 ```bash
-gcc geofind.c -o geofind -lcurl -ljson-c
-```
-
-Move the executable to your bin directory
-```bash
-sudo mv geofind /usr/local/bin/
+cat build | bash && sudo mv geofind /usr/local/bin
 ```
 
 ## Usage
 ```bash
 geofind [IP address or domain]
+geofind me
 ```
 
 ## Examples
