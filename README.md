@@ -17,7 +17,7 @@ git clone https://github.com/melyyn/geofind.git
 cd geofind
 ```
 
-Build the executable:
+Build:
 ```bash
 gcc geofind.c -o geofind -lcurl -ljson-c
 ```
@@ -29,7 +29,7 @@ sudo mv geofind /usr/local/bin/
 
 ## Usage
 ```bash
-geofind [IP address or URL]
+geofind [IP address or domain]
 ```
 
 ## Example
