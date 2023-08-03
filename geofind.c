@@ -1,4 +1,4 @@
-// geofind: a tiny tool for finding geolocation data of an IP address or a URL. //
+// geofind: a tiny tool for finding geolocation data of an IP address or a website. //
 // github.com/melyyn //
 
 #include <stdio.h>
