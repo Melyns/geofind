@@ -36,9 +36,11 @@ size_t write_callback(void *contents, size_t size, size_t nmemb, char *output) {
 // Function to get the full country name from the country code
 const char* get_country_name(const char* country_code) {
     for (size_t i = 0; i < NUM_COUNTRY_CODES; ++i) {
-        if (strcmp(country_codes[i].code, country_code) == 0) {
-            return country_codes[i].name;
+        if (strcmp(country_codes[i].code, country_code) != 0) {
+            continue;
         }
+        
+        return country_codes[i].name;
     }
     return UNKNOWN_COUNTRY;
 }
@@ -59,11 +61,12 @@ bool get_geolocation_info(const char *ip_or_url) {
     }
 
     for (p = res; p != NULL; p = p->ai_next) {
-        if (p->ai_family == AF_INET) { // IPv4
-            struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
-            inet_ntop(p->ai_family, &(ipv4->sin_addr), ip_buffer, sizeof ip_buffer);
-            break;
+        if (p->ai_family != AF_INET) { // IPv4
+            continue;
         }
+        struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
+        inet_ntop(p->ai_family, &(ipv4->sin_addr), ip_buffer, sizeof ip_buffer);
+        break;
     }
 
     freeaddrinfo(res);
@@ -76,54 +79,53 @@ bool get_geolocation_info(const char *ip_or_url) {
     CURL *curl = curl_easy_init();
     bool success = false;
 
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, url);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, buffer);
-
-        CURLcode res = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-
-        if (res == CURLE_OK) {
-            // Parse JSON and extract geolocation data
-            struct json_object *json = json_tokener_parse(buffer);
-            if (json != NULL && json_object_is_type(json, json_type_object)) {
-                struct json_object *city, *region, *country, *hostname, *org;
-
-                json_object_object_get_ex(json, "city", &city);
-                json_object_object_get_ex(json, "region", &region);
-                json_object_object_get_ex(json, "country", &country);
-                json_object_object_get_ex(json, "hostname", &hostname);
-                json_object_object_get_ex(json, "org", &org);
-
-                printf("\nIP: %s\n", ip_buffer);
-                printf("City: %s\n", json_object_get_string(city));
-                printf("Region: %s\n", json_object_get_string(region));
-                printf("Country: %s\n", get_country_name(json_object_get_string(country)));
-
-                if (json_object_get_type(org) == json_type_null) {
-                    printf("Org: (N/A)\n");
-                } else {
-                    printf("Org: %s\n", json_object_get_string(org));
-                }
-
-                if (json_object_get_type(hostname) == json_type_null) {
-                    printf("Hostname: (N/A)\n");
-                } else {
-                    printf("Hostname: %s\n", json_object_get_string(hostname));
-                }
-
-                json_object_put(json);
-                success = true;
-            } else {
-                printf("Error parsing JSON or invalid JSON format.\n");
-            }
-        } else {
-            printf("Error fetching geolocation data.\n");
-        }
-    } else {
+    if (!curl) {
         printf("Error initializing libcurl.\n");
     }
+    curl_easy_setopt(curl, CURLOPT_URL, url);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, buffer);
+
+    CURLcode res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+
+    if (res != CURLE_OK) {
+        printf("Error fetching geolocation data.\n");
+        return success;
+    }
+    // Parse JSON and extract geolocation data
+    struct json_object *json = json_tokener_parse(buffer);
+    if (json == NULL || json_object_is_type(json, json_type_object)) {
+        printf("Error parsing JSON or invalid JSON format.\n");
+    }
+    struct json_object *city, *region, *country, *hostname, *org;
+
+    json_object_object_get_ex(json, "city", &city);
+    json_object_object_get_ex(json, "region", &region);
+    json_object_object_get_ex(json, "country", &country);
+    json_object_object_get_ex(json, "hostname", &hostname);
+    json_object_object_get_ex(json, "org", &org);
+
+    printf("\nIP: %s\n", ip_buffer);
+    printf("City: %s\n", json_object_get_string(city));
+    printf("Region: %s\n", json_object_get_string(region));
+    printf("Country: %s\n", get_country_name(json_object_get_string(country)));
+
+    if (json_object_get_type(org) == json_type_null) {
+        printf("Org: (N/A)\n");
+    } else {
+        printf("Org: %s\n", json_object_get_string(org));
+    }
+
+    if (json_object_get_type(hostname) == json_type_null) {
+        printf("Hostname: (N/A)\n");
+    } else {
+        printf("Hostname: %s\n", json_object_get_string(hostname));
+    }
+
+    json_object_put(json);
+    success = true;
+
 
     return success;
 }
