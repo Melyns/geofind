@@ -4,9 +4,6 @@ GeoFind is a command-line tool/script that fetches geolocation information from 
 
 ![Screenshot](/.github/screenshot.png)
 
-## Why was this even made?
-Just to speed things up. Whois was too messy for my needs, & ipinfo does the job but I wanted to automate things instead of using curl to find info of an IP everytime. This tool does automatic DNS solving so you can use a website/domain name as an input not just IP adresses. GeoFind converts two letter country codes (which are the default output by ipinfo.io) to full country names automatically.
-
 ## Prerequisites
 - libcurl & libjson-c
 
