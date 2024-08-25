@@ -5,8 +5,8 @@
 //		██║   ██║██╔══╝  ██║   ██║██╔══╝  ██║██║╚██╗██║██║  ██║
 //		╚██████╔╝███████╗╚██████╔╝██║     ██║██║ ╚████║██████╔╝
 //		 ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝ 
-//         a simple tool for fetching geolocation data from an IP or website.                          
-//				https://github.com/melyyn
+//         a simple script for fetching geolocation data from an IP or website.                          
+//				https://github.com/melyns
 //
 
 #include <stdio.h>
