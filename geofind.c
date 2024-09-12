@@ -24,7 +24,6 @@
 #define MAX_URL_SIZE (sizeof(GEO_API) + INET6_ADDRSTRLEN + 5) // 5 for "/json"
 #define UNKNOWN_COUNTRY "Unknown"
 
-// Function to perform an HTTP GET request
 size_t write_callback(void *contents, size_t size, size_t nmemb, char *output) {
     size_t total_size = size * nmemb;
     size_t remaining_space = MAX_JSON_BUFFER_SIZE - strlen(output);
@@ -33,7 +32,6 @@ size_t write_callback(void *contents, size_t size, size_t nmemb, char *output) {
     return copy_size;
 }
 
-// Function to get the full country name from the country code
 const char* get_country_name(const char* country_code) {
     for (size_t i = 0; i < NUM_COUNTRY_CODES; ++i) {
         if (strcmp(country_codes[i].code, country_code) == 0) {
@@ -43,7 +41,6 @@ const char* get_country_name(const char* country_code) {
     return UNKNOWN_COUNTRY;
 }
 
-// Function to fetch geolocation information and print it
 bool get_geolocation_info(const char *ip_or_url) {
     struct addrinfo hints, *res, *p;
     int status;
@@ -59,7 +56,7 @@ bool get_geolocation_info(const char *ip_or_url) {
     }
 
     for (p = res; p != NULL; p = p->ai_next) {
-        if (p->ai_family == AF_INET) { // IPv4
+        if (p->ai_family == AF_INET) {
             struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
             inet_ntop(p->ai_family, &(ipv4->sin_addr), ip_buffer, sizeof ip_buffer);
             break;
@@ -68,7 +65,6 @@ bool get_geolocation_info(const char *ip_or_url) {
 
     freeaddrinfo(res);
 
-    // API request
     char url[MAX_URL_SIZE];
     snprintf(url, sizeof(url), "%s%s/json", GEO_API, ip_buffer);
 
@@ -85,7 +81,6 @@ bool get_geolocation_info(const char *ip_or_url) {
         curl_easy_cleanup(curl);
 
         if (res == CURLE_OK) {
-            // Parse JSON and extract geolocation data
             struct json_object *json = json_tokener_parse(buffer);
             if (json != NULL && json_object_is_type(json, json_type_object)) {
                 struct json_object *city, *region, *country, *hostname, *org;
@@ -128,7 +123,6 @@ bool get_geolocation_info(const char *ip_or_url) {
     return success;
 }
 
-// Function to print the usage information
 void print_usage(const char *program_name) {
     printf("Usage:\n");
     printf("%s [IP address or domain]\n", program_name);
@@ -137,7 +131,6 @@ void print_usage(const char *program_name) {
 
 int main(int argc, char *argv[]) {
     if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
-        // Print help information and exit if --help or -h is provided
         print_usage(argv[0]);
         return 0;
     }
@@ -151,18 +144,14 @@ int main(int argc, char *argv[]) {
     }
 
     if (strcmp(argv[1], "me") == 0) {
-        // Handle "me" command separately by directly executing "curl https://ipinfo.io"
         system("curl https://ipinfo.io");
         return 0;
     }
 
-    // Initialize libcurl
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
-    // Fetch geolocation information
     success = get_geolocation_info(argv[1]);
 
-    // Clean up libcurl
     curl_global_cleanup();
 
     return success ? 0 : 1;
