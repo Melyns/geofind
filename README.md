@@ -27,7 +27,18 @@ cat build | bash && sudo mv geofind /usr/local/bin
 ```bash
 geofind [IP address or domain]
 geofind me
+geofind file.txt
 ```
+You can use a text file containing list of IPs and/or domains as input, the output file will have `_geofind.txt` as prefix. The formatting of your input file should have line breaks to sepreate each IP/domain. For example
+```
+nasa.gov
+1.1.1.1
+archive.org
+8.8.8.8
+www.google.com
+```
+
+You can also scan for multiple IPs/domains at once by seperating each target with space.
 
 ## Examples
 ```bash
