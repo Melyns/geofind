@@ -176,7 +176,6 @@ int main(int argc, char *argv[]) {
         printf("Processing IPs from file: %s\n", argv[1]);
         process_file(argv[1]);
     } else {
-        // Process multiple targets
         for (int i = 1; i < argc; ++i) {
             if (strcmp(argv[i], "me") == 0) {
                 system("curl https://ipinfo.io");
