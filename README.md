@@ -1,8 +1,8 @@
 # GeoFind   [![CI](https://github.com/Melyyn/geofind/actions/workflows/ci.yml/badge.svg)](https://github.com/Melyyn/geofind/actions/workflows/ci.yml)
 
-GeoFind is a command-line tool that fetches geolocation information from an IP address or a domain using https://ipinfo.io
+Command-line tool that fetches geolocation information from an IP address or a domain using https://ipinfo.io
 
-![image](https://github.com/user-attachments/assets/04668746-7d81-4788-8379-445686360436)
+![image](https://github.com/user-attachments/assets/feb6b2b0-997a-45cc-a43d-192b01eb6277)
 
 ## Prerequisites
 - libcurl, libjson-c, curl, gcc
