@@ -5,11 +5,11 @@ GeoFind is a command-line tool/script that fetches geolocation information from 
 ![Screenshot](/.github/screenshot.png)
 
 ## Prerequisites
-- libcurl & libjson-c
+- libcurl, libjson-c, curl, gcc
 
 ```bash
 sudo apt update
-sudo apt install libcurl4-openssl-dev libjson-c-dev gcc
+sudo apt install curl libcurl4-openssl-dev libjson-c-dev gcc
 ```
 
 ## Installation
