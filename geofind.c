@@ -8,6 +8,7 @@
 //         a simple script for fetching geolocation data from an IP or website.                          
 //				https://github.com/melyns
 //
+//
 #include <stdio.h>
 #include <string.h>
 #include <curl/curl.h>
@@ -170,17 +171,18 @@ int main(int argc, char *argv[]) {
     }
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
-
-    if (argc == 2) {
-        if (strcmp(argv[1], "me") == 0) {
-            system("curl https://ipinfo.io");
-        } else {
-            if (strstr(argv[1], ".txt") != NULL) {
-                printf("Processing IPs from file: %s\n", argv[1]);
-                process_file(argv[1]);
+    
+    if (strstr(argv[1], ".txt") != NULL) {
+        printf("Processing IPs from file: %s\n", argv[1]);
+        process_file(argv[1]);
+    } else {
+        // Process multiple targets
+        for (int i = 1; i < argc; ++i) {
+            if (strcmp(argv[i], "me") == 0) {
+                system("curl https://ipinfo.io");
             } else {
-                printf("\nFetching geolocation for: %s\n", argv[1]);
-                get_geolocation_info(argv[1], stdout);
+                printf("\nFetching geolocation for: %s\n", argv[i]);
+                get_geolocation_info(argv[i], stdout);
             }
         }
     }
