@@ -15,7 +15,7 @@ sudo apt install curl libcurl4-openssl-dev libjson-c-dev gcc
 ## Installation
 Clone the repository:
 ```bash
-git clone https://github.com/melyyn/geofind.git && cd geofind
+git clone https://github.com/melyns/geofind.git && cd geofind
 ```
 
 Build & Install:
@@ -29,7 +29,7 @@ geofind [IP address or domain]
 geofind me
 geofind file.txt
 ```
-You can use a text file containing list of IPs and/or domains as input, the output file will have `_geofind.txt` as prefix. The formatting of your input file should have line breaks to sepreate each IP/domain. For example
+You can use a text file containing list of IPs and/or domains seperated by line break as input. The output file will have `_geofind.txt` as prefix and will be saved in the same location as the input file. For example your list should look like this:
 ```
 nasa.gov
 1.1.1.1
