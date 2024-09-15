@@ -41,6 +41,7 @@ www.google.com
 You can also scan for multiple IPs/domains at once by seperating each target with space.
 
 ## Examples
+#Single target
 ```bash
 $ geofind 8.8.8.8
 
@@ -51,16 +52,38 @@ Country: United States
 Org: AS15169 Google LLC
 Hostname: dns.google
 ```
-
+#Multiple targets at once, each seperated by space
 ```bash
-$ geofind nasa.gov
+$ geofind 6.9.42.0 microsoft.com www.fbi.gov
 
-IP: 23.22.39.120
-City: Ashburn
-Region: Virginia
+Results for: 6.9.42.0
+IP: 6.9.42.0
+City: Columbus
+Region: Ohio
 Country: United States
-Org: AS14618 Amazon.com, Inc.
-Hostname: ec2-23-22-39-120.compute-1.amazonaws.com
+Org: (N/A)
+Hostname: (N/A)
+
+Results for: microsoft.com
+IP: 20.236.44.162
+City: Moses Lake
+Region: Washington
+Country: United States
+Org: AS8075 Microsoft Corporation
+Hostname: (N/A)
+
+Results for: www.fbi.gov
+IP: 104.16.148.244
+City: San Francisco
+Region: California
+Country: United States
+Org: AS13335 Cloudflare, Inc.
+Hostname: (N/A)
+```
+#Process targets from a list
+```bash
+$ geofind ip.txt
+Processing IPs from file: ip.txt
 ```
 
 ## License
