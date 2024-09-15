@@ -25,11 +25,13 @@
 #define UNKNOWN_COUNTRY "Unknown"
 #define OUTPUT_FILE_SUFFIX "_geofind.txt"
 
-size_t write_callback(void *contents, size_t size, size_t nmemb, char *output) {
+size_t write_callback(void *contents, size_t size, size_t nmemb, void *output) {
     size_t total_size = size * nmemb;
-    size_t remaining_space = MAX_JSON_BUFFER_SIZE - strlen(output);
+    size_t current_length = strlen((char *)output);
+    size_t remaining_space = MAX_JSON_BUFFER_SIZE - current_length;
     size_t copy_size = total_size < remaining_space ? total_size : remaining_space;
-    memcpy(output + strlen(output), contents, copy_size);
+    memcpy((char *)output + current_length, contents, copy_size);
+    ((char *)output)[current_length + copy_size] = '\0';
     return copy_size;
 }
 
@@ -116,6 +118,8 @@ bool get_geolocation_info(const char *ip_or_url, FILE *output_file) {
         fprintf(output_file, "Error initializing libcurl.\n");
     }
 
+    fprintf(output_file, "\n");
+
     return success;
 }
 
@@ -132,11 +136,27 @@ void process_file(const char* filename) {
         return;
     }
 
-    char output_filename[FILENAME_MAX];
-    snprintf(output_filename, sizeof(output_filename), "%s%s", filename, OUTPUT_FILE_SUFFIX);
+    char base_filename[FILENAME_MAX];
+    strncpy(base_filename, filename, sizeof(base_filename));
+    char *ext = strrchr(base_filename, '.');
+    if (ext && strcmp(ext, ".txt") == 0) {
+        *ext = '\0';
+    }
+
+    size_t output_filename_size = strlen(base_filename) + strlen(OUTPUT_FILE_SUFFIX) + 1;
+    char *output_filename = (char *)malloc(output_filename_size);
+    if (!output_filename) {
+        perror("Error allocating memory");
+        fclose(file);
+        return;
+    }
+
+    snprintf(output_filename, output_filename_size, "%s%s", base_filename, OUTPUT_FILE_SUFFIX);
+
     FILE *output_file = fopen(output_filename, "w");
     if (!output_file) {
         perror("Error opening output file");
+        free(output_filename);
         fclose(file);
         return;
     }
@@ -146,7 +166,7 @@ void process_file(const char* filename) {
         line[strcspn(line, "\n")] = 0;
 
         if (strlen(line) > 0) {
-            fprintf(output_file, "\nFetching geolocation for: %s\n", line);
+            fprintf(output_file, "\nResults for: %s\n", line);
             bool success = get_geolocation_info(line, output_file);
             if (!success) {
                 fprintf(output_file, "Failed to fetch geolocation for: %s\n", line);
@@ -156,6 +176,7 @@ void process_file(const char* filename) {
 
     fclose(file);
     fclose(output_file);
+    free(output_filename);
 }
 
 int main(int argc, char *argv[]) {
@@ -171,7 +192,7 @@ int main(int argc, char *argv[]) {
     }
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
-    
+
     if (strstr(argv[1], ".txt") != NULL) {
         printf("Processing IPs from file: %s\n", argv[1]);
         process_file(argv[1]);
@@ -180,7 +201,7 @@ int main(int argc, char *argv[]) {
             if (strcmp(argv[i], "me") == 0) {
                 system("curl https://ipinfo.io");
             } else {
-                printf("\nFetching geolocation for: %s\n", argv[i]);
+                printf("\nResults for: %s\n", argv[i]);
                 get_geolocation_info(argv[i], stdout);
             }
         }
