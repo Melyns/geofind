@@ -1,13 +1,11 @@
 #ifndef COUNTRY_CODES_H
 #define COUNTRY_CODES_H
 
-// Structure to hold country code and name mapping
 struct CountryCode {
     const char* code;
     const char* name;
 };
 
-// List of country codes and their corresponding full names
 static const struct CountryCode country_codes[] = {
     { "AF", "Afghanistan" },
     { "AL", "Albania" },
@@ -261,4 +259,4 @@ static const struct CountryCode country_codes[] = {
 
 #define NUM_COUNTRY_CODES (sizeof(country_codes) / sizeof(country_codes[0]))
 
-#endif // COUNTRY_CODES_H
+#endif
