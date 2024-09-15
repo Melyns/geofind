@@ -118,7 +118,7 @@ bool get_geolocation_info(const char *ip_or_url, FILE *output_file) {
         fprintf(output_file, "Error initializing libcurl.\n");
     }
 
-    fprintf(output_file, "\n");
+    fprintf(output_file, "\n"); // Add a line break at the end
 
     return success;
 }
