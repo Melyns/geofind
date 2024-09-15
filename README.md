@@ -2,7 +2,7 @@
 
 GeoFind is a command-line tool/script that fetches geolocation information from an IP address or a domain using https://ipinfo.io
 
-![Screenshot](/.github/screenshot.png)
+![image](https://github.com/user-attachments/assets/226d8724-70db-466f-a716-280111cd9e76)
 
 ## Prerequisites
 - libcurl, libjson-c, curl, gcc
