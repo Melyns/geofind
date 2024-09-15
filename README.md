@@ -20,7 +20,7 @@ git clone https://github.com/melyyn/geofind.git && cd geofind
 
 Build & Install:
 ```bash
-cat build | bash && sudo mv geofind /usr/local/bin
+chmod +x build.sh && ./build.sh
 ```
 
 ## Usage
