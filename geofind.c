@@ -5,8 +5,8 @@
 //		██║   ██║██╔══╝  ██║   ██║██╔══╝  ██║██║╚██╗██║██║  ██║
 //		╚██████╔╝███████╗╚██████╔╝██║     ██║██║ ╚████║██████╔╝
 //		 ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝ 
-//         a simple script for fetching geolocation data from an IP or website.                          
-//				https://github.com/melyns
+//         a script for fetching geolocation data from an IP or website.                          
+//				       https://github.com/melyns
 //
 //
 #include <stdio.h>
@@ -118,7 +118,7 @@ bool get_geolocation_info(const char *ip_or_url, FILE *output_file) {
         fprintf(output_file, "Error initializing libcurl.\n");
     }
 
-    fprintf(output_file, "\n"); // Add a line break at the end
+    fprintf(output_file, "\n");
 
     return success;
 }
